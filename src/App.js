@@ -5,6 +5,7 @@ import ResetPassword from "./components/ResetPassword";
 import PrivateRoute from './components/PrivateRoute'
 import Dashboard from './components/Dashboard'
 import Missing from './components/Missing'
+import UpdateProfile from './components/UpdateProfile'
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="resetpassword" element={<ResetPassword />} />
         <Route element={<PrivateRoute />}>
           <Route path="dashboard" element={<Dashboard />} />
+          <Route path="updateprofile/*" element={<UpdateProfile />} />
         </Route>
         <Route path="*" element={<Missing />} />
       </Routes>

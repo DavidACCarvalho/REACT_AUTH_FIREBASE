@@ -5,7 +5,9 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    sendEmailVerification
+    signOut,
+    sendEmailVerification,
+    sendPasswordResetEmail
 } from "firebase/auth";
 //eslint-disable-next-line
 import { app } from '../firebase'
@@ -50,6 +52,21 @@ const AuthProvider = ({ children }) => {
         }
     }
 
+    const logOut = () => signOut(auth)
+
+    const resetPassword = async (email) => {
+        try {
+            await sendPasswordResetEmail(auth, email)
+            setError('')
+            navigate('/')
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+
+    }
+
 
     useEffect(() => {
         setLoading(true)
@@ -69,6 +86,8 @@ const AuthProvider = ({ children }) => {
         <AuthContext.Provider value={{
             signUp,
             logIn,
+            logOut,
+            resetPassword,
             setError,
             setLoading,
             currentUser,
