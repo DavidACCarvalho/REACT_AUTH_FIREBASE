@@ -5,9 +5,11 @@ import {
     createUserWithEmailAndPassword,
     signInWithEmailAndPassword,
     onAuthStateChanged,
-    signOut,
     sendEmailVerification,
-    sendPasswordResetEmail
+    sendPasswordResetEmail,
+    signOut,
+    updateEmail,
+    updatePassword,
 } from "firebase/auth";
 //eslint-disable-next-line
 import { app } from '../firebase'
@@ -67,6 +69,31 @@ const AuthProvider = ({ children }) => {
 
     }
 
+    const changeEmail = async (email) => {
+        try {
+            await updateEmail(auth.currentUser, email)
+            setError('')
+            navigate('/dashboard')
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
+
+    const changePassword = async (password, passwordConfirmation) => {
+        if (password !== passwordConfirmation) return setError("Password's not match")
+
+        try {
+            await updatePassword(auth.currentUser, password)
+            setError('')
+            navigate('/')
+        } catch (err) {
+            setError(err.message)
+        } finally {
+            setLoading(false)
+        }
+    }
 
     useEffect(() => {
         setLoading(true)
@@ -88,6 +115,8 @@ const AuthProvider = ({ children }) => {
             logIn,
             logOut,
             resetPassword,
+            changeEmail,
+            changePassword,
             setError,
             setLoading,
             currentUser,

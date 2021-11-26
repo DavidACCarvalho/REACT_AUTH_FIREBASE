@@ -5,6 +5,8 @@ import { useAuth } from "../contexts/AuthContext"
 const Dashboard = () => {
     const { currentUser, logOut } = useAuth()
 
+    useEffect(() => { }, [currentUser])
+
     return (
         <div className="profile-container">
             <h2>Profile</h2>
