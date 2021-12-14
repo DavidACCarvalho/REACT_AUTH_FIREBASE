@@ -1,4 +1,4 @@
-import { Outlet, Navigate } from "react-router"
+import { Outlet } from "react-router"
 import { useAuth } from "../contexts/AuthContext"
 
 const PrivateRoute = () => {
@@ -6,7 +6,7 @@ const PrivateRoute = () => {
 
     return (
         <>
-            {currentUser ? <Outlet /> : <Navigate replace to="/login" />}
+            {currentUser && <Outlet />}
         </>
     )
 }
